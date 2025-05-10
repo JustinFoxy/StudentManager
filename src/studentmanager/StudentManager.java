@@ -22,4 +22,21 @@ public class StudentManager {
             }
         }
     }
+
+    //添加删除学生
+    public void deleteStudentByName(String name) {
+        boolean found = false;
+        for(int i=0; i<studentList.size(); i++) {
+            if(studentList.get(i).getName().equals(name)) {
+                studentList.remove(i);
+                System.out.println("已成功移除名字为 "+name+" 的学生。");
+                found = true;
+                break;
+            }
+        }if(!found) {
+            System.out.println("没有找到名字为 "+name+" 的学生。");
+        }
+    }
+
+
 }
