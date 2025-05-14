@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         StudentManager manager = new StudentManager();
+        //在程序的最前面调用：读取txt中的学生数据
+        manager.loadFromFile("students_info.txt");
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
         while (running) {
@@ -13,6 +15,7 @@ public class Main {
             System.out.println("    1.添加学生");
             System.out.println("    2.显示所有学生");
             System.out.println("    3.删除学生");
+            System.out.println("    4.修改学生");
             System.out.print("请输入你的选择：");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -23,22 +26,30 @@ public class Main {
                     running=false;
                     break;
                 case 1:
-                    System.out.println("请输入学生的姓名：");
+                    System.out.print("请输入学生的姓名：");
                     String name = scanner.nextLine();
-                    System.out.println("请输入学生的年龄：");
+                    System.out.print("请输入学生的年龄：");
                     int age = scanner.nextInt();
                     manager.addStudent(name, age);
+                    manager.saveToFile("students_info.txt");
                     break;
                 case 2:
                     manager.showAllStudents();
                     break;
                 case 3:
-                    System.out.println("请输入要删除的学生姓名：");
+                    System.out.print("请输入要删除的学生姓名：");
                     String nameToDelete = scanner.nextLine();
                     manager.deleteStudentByName(nameToDelete);
+                    manager.saveToFile("students_info.txt");
+                    break;
+                case 4:
+                    System.out.print("请输入要修改的学生姓名：");
+                    String nameToUpdate = scanner.nextLine();
+                    manager.updateStudentByName(nameToUpdate, scanner);
+                    manager.saveToFile("students_info.txt");  // 记得保存修改
                     break;
                 default:
-                    System.out.println("无效的选项，请重新输入！");
+                    System.out.print("无效的选项，请重新输入！");
             }
         }
         scanner.close();
